@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ird_selection_project/ui/screens/splash_screen.dart';
+import 'package:ird_selection_project/controller/section_query_controller.dart';
 import 'package:ird_selection_project/ui/style/colors.dart';
 
+import 'controller/books_query_controller.dart';
+import 'controller/chapter_query_controller.dart';
+import 'controller/hadith_query_controller.dart';
+import 'data/database_helper/dbhelper.dart';
 import 'ui/screens/initial_page_screen.dart';
 
 class HadisApp extends StatelessWidget {
   const HadisApp({super.key});
 
+  static GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: navigationKey,
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: InitialPageScreen(),
       theme: ThemeData(
           primaryColor: Colors.green,
           appBarTheme: AppBarTheme(
@@ -46,6 +53,18 @@ class HadisApp extends StatelessWidget {
                 color: Colors.grey,
                 fontFamily: 'kalpurush'),
           )),
+      initialBinding: ControllerBinders(),
     );
+  }
+}
+
+class ControllerBinders extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(DbHelperController());
+    Get.put((BooksQueryController()));
+    Get.put((ChapterQueryController()));
+    Get.put((HadithQueryController()));
+    Get.put((SectionQueryController()));
   }
 }

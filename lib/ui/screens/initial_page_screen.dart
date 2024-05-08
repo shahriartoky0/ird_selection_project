@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ird_selection_project/ui/screens/chapter_page_screen.dart';
-
+import '../../controller/books_query_controller.dart';
+import '../../data/model/books.dart';
 import '../widget/leading_tile_icon.dart';
 
 class InitialPageScreen extends StatefulWidget {
@@ -12,6 +13,14 @@ class InitialPageScreen extends StatefulWidget {
 }
 
 class _InitialPageScreenState extends State<InitialPageScreen> {
+  @override
+  void initState() {
+    Get.find<BooksQueryController>().bookList.clear();
+    Get.find<BooksQueryController>().booksQuery();
+    // BooksQueryController().booksQuery();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,36 +38,44 @@ class _InitialPageScreenState extends State<InitialPageScreen> {
             Text('সব হাদিসের বই ',
                 style: Theme.of(context).textTheme.labelMedium),
             SizedBox(height: 8),
-            Expanded(
-                child: ListView.separated(
-              itemCount: 20,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: leadingTileIcon(iconColor: Colors.green, text: 'B'),
-                  tileColor: Colors.white,
-                  title: Text('Book Name',
-                      style: Theme.of(context).textTheme.labelMedium),
-                  subtitle: Text('Writer Name',
-                      style: Theme.of(context).textTheme.labelSmall),
-                  trailing: Column(children: [
-                    SizedBox(height: 5),
-                    Text('Total hadis',
+            Expanded(child: GetBuilder<BooksQueryController>(
+                builder: (booksQueryController) {
+              return ListView.separated(
+                itemCount: booksQueryController.bookList.length,
+                itemBuilder: (context, index) {
+                  Books book = booksQueryController.bookList[index];
+                  return ListTile(
+                    leading: leadingTileIcon(
+                        iconColor: Colors.green, text: book.abvrCode),
+                    tileColor: Colors.white,
+                    title: Text(book.title,
+                        style: Theme.of(context).textTheme.labelMedium),
+                    subtitle: Text(book.titleAr,
                         style: Theme.of(context)
                             .textTheme
-                            .labelMedium
-                            ?.copyWith(fontSize: 18)),
-                    SizedBox(height: 5),
-                    Text('হাদিস', style: Theme.of(context).textTheme.labelSmall)
-                  ]),
-                  onTap: () {
-                    Get.to(ChapterPageScreen());
-                  },
-                );
-              },
-              separatorBuilder: (_, __) {
-                return Divider();
-              },
-            ))
+                            .labelSmall
+                            ?.copyWith(fontFamily: 'kfgq')),
+                    trailing: Column(children: [
+                      SizedBox(height: 5),
+                      Text(book.numberOfHadith.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(fontSize: 18)),
+                      SizedBox(height: 5),
+                      Text('হাদিস',
+                          style: Theme.of(context).textTheme.labelSmall)
+                    ]),
+                    onTap: () {
+                      Get.to(ChapterPageScreen(book: book));
+                    },
+                  );
+                },
+                separatorBuilder: (_, __) {
+                  return Divider();
+                },
+              );
+            }))
           ],
         ),
       ),

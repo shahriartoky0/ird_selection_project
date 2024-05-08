@@ -27,11 +27,9 @@ class ChapterDetailsContainer extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(chapterTitle,
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium
-                        ?.copyWith(color: greenColor)),
+                Text('$chapterTitle :',
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: greenColor, fontWeight: FontWeight.bold)),
                 SizedBox(width: 5),
                 Text(chapterIntro,
                     style: Theme.of(context)

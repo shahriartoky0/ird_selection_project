@@ -1,20 +1,47 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ird_selection_project/controller/section_query_controller.dart';
 import 'package:ird_selection_project/ui/style/colors.dart';
-import 'package:ird_selection_project/ui/widget/leading_tile_icon.dart';
 import 'package:ird_selection_project/ui/widget/my_app_bar.dart';
-
+import '../../controller/hadith_query_controller.dart';
 import '../widget/chapter_details_container.dart';
 import '../widget/hadith_part.dart';
 import '../widget/hadith_ref_tile.dart';
 
-class HadithPageScreen extends StatelessWidget {
-  const HadithPageScreen({Key? key}) : super(key: key);
+class HadithPageScreen extends StatefulWidget {
+  final String bookName;
+  final String chapterName;
+  final int bookId;
+  final int chapterId;
+
+  const HadithPageScreen(
+      {super.key,
+      required this.bookName,
+      required this.chapterName,
+      required this.bookId,
+      required this.chapterId});
+
+  @override
+  State<HadithPageScreen> createState() => _HadithPageScreenState();
+}
+
+class _HadithPageScreenState extends State<HadithPageScreen> {
+  @override
+  void initState() {
+    Get.find<HadithQueryController>().hadithList.clear();
+    Get.find<HadithQueryController>()
+        .hadithQuery(bookId: widget.bookId, chapterId: widget.chapterId);
+    Get.find<SectionQueryController>().sectionList.clear();
+    Get.find<SectionQueryController>()
+        .sectionQuery(bookId: widget.bookId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: 'book Name', subtitle: 'chapter name'),
+      appBar: MyAppBar(title: widget.bookName, subtitle: widget.chapterName),
       body: Stack(
         children: [
           Container(
