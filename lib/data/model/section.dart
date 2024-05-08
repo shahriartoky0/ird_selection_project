@@ -13,7 +13,7 @@ class Section {
 
   final String preface;
 
-  final int number;
+  final String number;
 
   Section(
       {required this.id,

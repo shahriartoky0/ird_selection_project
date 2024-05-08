@@ -53,7 +53,7 @@ class _ChapterPageScreenState extends State<ChapterPageScreen> {
                     bookName: widget.book.title,
                     chapterName: chapter.title,
                     bookId: widget.book.id,
-                    chapterId: chapter.chapterId,
+                    chapterId: chapter.chapterId, iconLetter: widget.book.abvrCode,
                   ));
                 },
               );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../utilities/utilities.dart';
 import '../style/colors.dart';
 import 'leading_tile_icon.dart';
 
@@ -9,7 +10,7 @@ class HadithRefTile extends StatelessWidget {
   final String bookName;
   final int hadithNumber;
   final String hadithCategory;
-  final categoryColor;
+  final String categoryColor;
 
   const HadithRefTile({
     super.key,
@@ -18,11 +19,13 @@ class HadithRefTile extends StatelessWidget {
     required this.bookName,
     required this.hadithNumber,
     required this.hadithCategory,
-    this.categoryColor = Colors.green,
+    // this.categoryColor = const Color(0x0000ff00),
+    required this.categoryColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    Color parsedColor = parseHexColor(categoryColor);
     return ListTile(
       leading: leadingTileIcon(text: iconLetter, iconColor: iconColor),
       tileColor: Colors.white,
@@ -35,8 +38,10 @@ class HadithRefTile extends StatelessWidget {
       trailing: ElevatedButton(
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-            backgroundColor: categoryColor),
-        onPressed: () {},
+            backgroundColor: parsedColor),
+        onPressed: () {
+          print(categoryColor);
+        },
         child: Text(hadithCategory,
             style: Theme.of(context)
                 .textTheme
@@ -45,4 +50,6 @@ class HadithRefTile extends StatelessWidget {
       ),
     );
   }
+
+
 }

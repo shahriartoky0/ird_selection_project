@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 String convertToBengaliNumber(String englishNumber) {
   final bengaliNumbers = {
     '0': '০',
@@ -18,4 +20,9 @@ String convertToBengaliNumber(String englishNumber) {
         bengaliNumbers[digit] ?? digit; // Use original digit if not found
   }
   return convertedNumber;
+}
+// Function to parse hexadecimal color code to Color object
+Color parseHexColor(String hexColor) {
+  String formattedColor = hexColor.replaceAll('#', '');
+  return Color(int.parse('0xFF$formattedColor'));
 }

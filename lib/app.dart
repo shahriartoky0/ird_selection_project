@@ -35,7 +35,7 @@ class HadisApp extends StatelessWidget {
                 fontSize: 25,
                 fontFamily: 'kalpurush'),
             displaySmall: TextStyle(
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
                 letterSpacing: 0.75,
                 fontSize: 19,
                 color: Colors.black,

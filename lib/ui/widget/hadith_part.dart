@@ -6,7 +6,10 @@ class HadithPart extends StatelessWidget {
   final String bengaliText;
 
   const HadithPart({
-    super.key, required this.describer, required this.arabicText, required this.bengaliText,
+    super.key,
+    required this.describer,
+    required this.arabicText,
+    required this.bengaliText,
   });
 
   @override
@@ -14,25 +17,19 @@ class HadithPart extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(describer,
+        Text('${describer} থেকে বর্ণিত',
             style: Theme.of(context)
                 .textTheme
                 .displaySmall
-                ?.copyWith(
-                color: Colors.green.shade500)),
+                ?.copyWith(color: Colors.green.shade500)),
         SizedBox(height: 8),
         Text(arabicText,
             style: Theme.of(context)
                 .textTheme
                 .displaySmall
-                ?.copyWith(
-                fontSize: 18,
-                fontFamily: 'kfgq')),
-        SizedBox(height: 8),
-        Text(bengaliText,
-            style: Theme.of(context)
-                .textTheme
-                .displaySmall)
+                ?.copyWith(fontSize: 22, fontFamily: 'kfgq')),
+        SizedBox(height: 20),
+        Text(bengaliText, style: Theme.of(context).textTheme.displaySmall)
       ],
     );
   }

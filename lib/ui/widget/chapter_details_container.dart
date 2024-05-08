@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../style/colors.dart';
@@ -24,10 +25,11 @@ class ChapterDetailsContainer extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            Wrap(
               children: [
-                Text('$chapterTitle :',
+                Text(chapterTitle,
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         color: greenColor, fontWeight: FontWeight.bold)),
                 SizedBox(width: 5),
