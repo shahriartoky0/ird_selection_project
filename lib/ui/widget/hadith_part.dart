@@ -17,18 +17,18 @@ class HadithPart extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('${describer} থেকে বর্ণিত',
+        Text('$describer থেকে বর্ণিত',
             style: Theme.of(context)
                 .textTheme
                 .displaySmall
                 ?.copyWith(color: Colors.green.shade500)),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(arabicText,
             style: Theme.of(context)
                 .textTheme
                 .displaySmall
                 ?.copyWith(fontSize: 22, fontFamily: 'kfgq')),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Text(bengaliText, style: Theme.of(context).textTheme.displaySmall)
       ],
     );

@@ -16,7 +16,7 @@ class SectionQueryController extends GetxController {
       where: 'book_id = ?',
       whereArgs: [bookId],
     );
-    print(results);
+
     for (Map<String, dynamic> row in results) {
       Section section = Section(
           id: row['id'],

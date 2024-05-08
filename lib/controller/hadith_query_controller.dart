@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ird_selection_project/controller/section_query_controller.dart';
 import 'package:ird_selection_project/data/model/hadith.dart';
 import 'package:sqflite/sqflite.dart';
 import '../data/database_helper/dbhelper.dart';
@@ -8,15 +9,21 @@ class HadithQueryController extends GetxController {
   List<Map<String, dynamic>> results = [];
   late List<Hadith> hadithList = [];
 
+  bool loader = false;
+
   Future<void> hadithQuery(
       {required int bookId, required int chapterId}) async {
     database = DbHelperController().initializeDatabase();
+    loader = true;
     final db = await database;
+
     results = await db.query(
       'hadith',
       where: 'book_id = ? AND chapter_id = ?',
       whereArgs: [bookId, chapterId],
     );
+    loader = false;
+    update();
 
     print(results);
     for (Map<String, dynamic> row in results) {
@@ -36,6 +43,15 @@ class HadithQueryController extends GetxController {
           hadithId: row['hadith_id']);
       hadithList.add(hadith);
     }
+    update();
+  }
+  Future<void> loadData({required int bookId,required int chapterId}) async {
+    loader = true ;
+    await Get.find<HadithQueryController>()
+        .hadithQuery(bookId: bookId, chapterId: chapterId);
+    await Get.find<SectionQueryController>()
+        .sectionQuery(bookId:bookId);
+    loader = false ;
     update();
   }
 }

@@ -37,11 +37,9 @@ class HadithRefTile extends StatelessWidget {
               ?.copyWith(fontSize: 20, color: greenColor)),
       trailing: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
             backgroundColor: parsedColor),
-        onPressed: () {
-          print(categoryColor);
-        },
+        onPressed: () {},
         child: Text(hadithCategory,
             style: Theme.of(context)
                 .textTheme
@@ -50,6 +48,4 @@ class HadithRefTile extends StatelessWidget {
       ),
     );
   }
-
-
 }

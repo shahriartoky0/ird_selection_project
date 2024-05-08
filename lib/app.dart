@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ird_selection_project/controller/section_query_controller.dart';
+import 'package:ird_selection_project/ui/screens/splash_screen.dart';
 import 'package:ird_selection_project/ui/style/colors.dart';
-
 import 'controller/books_query_controller.dart';
 import 'controller/chapter_query_controller.dart';
 import 'controller/hadith_query_controller.dart';
 import 'data/database_helper/dbhelper.dart';
-import 'ui/screens/initial_page_screen.dart';
 
 class HadisApp extends StatelessWidget {
   const HadisApp({super.key});
@@ -19,16 +18,18 @@ class HadisApp extends StatelessWidget {
     return GetMaterialApp(
       navigatorKey: navigationKey,
       debugShowCheckedModeBanner: false,
-      home: InitialPageScreen(),
+      home: const SplashScreen(),
       theme: ThemeData(
           primaryColor: Colors.green,
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
               color: greenColor, iconTheme: IconThemeData(color: Colors.white)),
           colorScheme: ColorScheme.fromSwatch(
             backgroundColor: bodyBackGroundColor,
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(foregroundColor: Colors.white)),
+          progressIndicatorTheme:
+              const ProgressIndicatorThemeData(color: greenColor),
           textTheme: const TextTheme(
             displayLarge: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -41,7 +42,7 @@ class HadisApp extends StatelessWidget {
                 color: Colors.black,
                 fontFamily: 'kalpurush'),
             labelMedium: TextStyle(
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
                 letterSpacing: 0.75,
                 fontSize: 19,
                 color: greyTextColor,

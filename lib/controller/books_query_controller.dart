@@ -4,13 +4,17 @@ import 'package:sqflite/sqflite.dart';
 import '../data/model/books.dart';
 
 class BooksQueryController extends GetxController {
+  bool loader = false;
+
   late Future<Database> database;
   List<Map<String, dynamic>> results = [];
   late List<Books> bookList = [];
 
   Future<void> booksQuery() async {
     database = DbHelperController().initializeDatabase();
+    loader = true;
     final db = await database;
+    loader = false;
     results = await db.query('books');
     print(results);
     for (Map<String, dynamic> row in results) {

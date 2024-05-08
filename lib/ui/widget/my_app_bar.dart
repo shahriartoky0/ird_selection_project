@@ -8,7 +8,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       : super(key: key);
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(title,
               style: Theme.of(context)
                   .textTheme
@@ -27,7 +27,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   .textTheme
                   .labelSmall
                   ?.copyWith(color: Colors.white, fontSize: 17)),
-          SizedBox(height: 8)
+          const SizedBox(height: 8)
         ],
       ),
     );

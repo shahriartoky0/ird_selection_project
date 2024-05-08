@@ -7,16 +7,19 @@ class ChapterQueryController extends GetxController {
   late Future<Database> database;
   List<Map<String, dynamic>> results = [];
   late List<Chapter> chapterList = [];
+  bool loader = false;
 
   Future<void> chapterQuery({required int bookId}) async {
     database = DbHelperController().initializeDatabase();
     final db = await database;
+    loader = true;
     results = await db.query(
       'chapter',
       where: 'book_id = ?',
       whereArgs: [bookId], // Replace with actual book ID if needed
     );
-    print(results);
+    loader = false;
+
     for (Map<String, dynamic> row in results) {
       Chapter chapter = Chapter(
           id: row['id'],

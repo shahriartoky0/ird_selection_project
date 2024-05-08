@@ -39,27 +39,34 @@ class _ChapterPageScreenState extends State<ChapterPageScreen> {
         return ListView.separated(
             itemBuilder: (context, index) {
               Chapter chapter = chapterQueryController.chapterList[index];
-              return ListTile(
-                leading: leadingTileIcon(
-                    iconColor: greenColor,
-                    text: convertToBengaliNumber((index + 1).toString())),
-                tileColor: Colors.white,
-                title: Text(chapter.title,
-                    style: Theme.of(context).textTheme.labelMedium),
-                subtitle: Text('হাদিসের রেঞ্জ : ${chapter.hadithRange}',
-                    style: Theme.of(context).textTheme.labelSmall),
-                onTap: () {
-                  Get.to(HadithPageScreen(
-                    bookName: widget.book.title,
-                    chapterName: chapter.title,
-                    bookId: widget.book.id,
-                    chapterId: chapter.chapterId, iconLetter: widget.book.abvrCode,
-                  ));
-                },
+              return Visibility(
+                visible: chapterQueryController.loader == false,
+                replacement: const Center(child: CircularProgressIndicator(),),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListTile(
+                    leading: leadingTileIcon(
+                        iconColor: greenColor,
+                        text: convertToBengaliNumber((index + 1).toString())),
+                    tileColor: Colors.white,
+                    title: Text(chapter.title,
+                        style: Theme.of(context).textTheme.labelMedium),
+                    subtitle: Text('হাদিসের রেঞ্জ : ${chapter.hadithRange}',
+                        style: Theme.of(context).textTheme.labelSmall),
+                    onTap: () {
+                      Get.to(HadithPageScreen(
+                        bookName: widget.book.title,
+                        chapterName: chapter.title,
+                        bookId: widget.book.id,
+                        chapterId: chapter.chapterId, iconLetter: widget.book.abvrCode,
+                      ));
+                    },
+                  ),
+                ),
               );
             },
             separatorBuilder: (_, __) {
-              return Divider();
+              return const Divider();
             },
             itemCount: chapterQueryController.chapterList.length);
       }),

@@ -32,10 +32,8 @@ class HadithPageScreen extends StatefulWidget {
 class _HadithPageScreenState extends State<HadithPageScreen> {
   @override
   initState() {
-    Get.find<HadithQueryController>().hadithList.clear();
     Get.find<HadithQueryController>()
-        .hadithQuery(bookId: widget.bookId, chapterId: widget.chapterId);
-    Get.find<SectionQueryController>().sectionList.clear();
+        .loadData(bookId: widget.bookId, chapterId: widget.chapterId);
     super.initState();
   }
 
@@ -47,70 +45,108 @@ class _HadithPageScreenState extends State<HadithPageScreen> {
         children: [
           Container(
             height: 20,
-            color: greenColor, // Assuming greenColor is defined somewhere
+            color: greenColor,
           ),
           Container(
-            margin: EdgeInsets.only(top: 5),
+            margin: const EdgeInsets.only(top: 5),
             width: double.infinity,
-            // Add margin to separate from colored container
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: bodyBackGroundColor,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0))),
             child: Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: GetBuilder<HadithQueryController>(
                   builder: (hadithQueryController) {
-                return ListView.builder(
-                  itemCount: hadithQueryController.hadithList.length,
-                  itemBuilder: (context, index) {
-                    Hadith hadith = hadithQueryController.hadithList[index];
-                    Get.find<SectionQueryController>()
-                        .sectionQuery(bookId: widget.bookId);
-
-                    final sectionList =
-                        Get.find<SectionQueryController>().sectionList;
-                    final section = sectionList.isNotEmpty
-                        ? sectionList[index % sectionList.length]
-                        : null;
-
-                    return Column(
-                      children: [
-                        ChapterDetailsContainer(
-                            chapterTitle: section?.number ?? '',
-                            chapterIntro:
-                                index == 0 ? section?.title ?? '' : '',
-                            quranVerse: section?.preface ?? ''),
-                        SizedBox(height: 10),
-                        Container(
-                          decoration: BoxDecoration(color: Colors.white),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              HadithRefTile(
-                                iconLetter: widget.iconLetter,
-                                bookName: widget.bookName,
-                                hadithNumber: hadith.hadithId,
-                                hadithCategory: hadith.grade,
-                                categoryColor: hadith.gradeColor,
-                              ),
-                              SizedBox(height: 3),
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: HadithPart(
-                                  describer: hadith.narrator,
-                                  arabicText: hadith.ar,
-                                  bengaliText: hadith.bn,
+                return Visibility(
+                  visible: hadithQueryController.loader == false,
+                  replacement: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  child: ListView.builder(
+                    itemCount: hadithQueryController.hadithList.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == hadithQueryController.hadithList.length) {
+                        return Container(
+                          color: Colors.white,
+                          width: double.infinity,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Divider(
+                                      thickness: 2, color: bodyBackGroundColor),
                                 ),
-                              )
-                            ],
+                                Text('ফুটনোট:',
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall),
+                                const SizedBox(height: 5),
+                                Text(
+                                    hadithQueryController
+                                        .hadithList[index - 1].note,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall)
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 20),
-                      ],
-                    );
-                  },
+                        );
+                      }
+
+                      Hadith hadith = hadithQueryController.hadithList[index];
+                      Get.find<SectionQueryController>()
+                          .sectionQuery(bookId: widget.bookId);
+
+                      final sectionList =
+                          Get.find<SectionQueryController>().sectionList;
+                      final section = sectionList.isNotEmpty
+                          ? sectionList[index % sectionList.length]
+                          : null;
+
+                      return Column(
+                        children: [
+                          index == 0
+                              ? const SizedBox(height: 0)
+                              : const SizedBox(height: 20),
+                          ChapterDetailsContainer(
+                              chapterTitle: section?.number ?? '',
+                              chapterIntro:
+                                  index == 0 ? section?.title ?? '' : '',
+                              quranVerse: section?.preface ?? ''),
+                          const SizedBox(height: 10),
+                          Container(
+                            decoration:
+                                const BoxDecoration(color: Colors.white),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                HadithRefTile(
+                                  iconLetter: widget.iconLetter,
+                                  bookName: widget.bookName,
+                                  hadithNumber: hadith.hadithId,
+                                  hadithCategory: hadith.grade,
+                                  categoryColor: hadith.gradeColor,
+                                ),
+                                const SizedBox(height: 3),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: HadithPart(
+                                    describer: hadith.narrator,
+                                    arabicText: hadith.ar,
+                                    bengaliText: hadith.bn,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          // const SizedBox(height: 20),
+                        ],
+                      );
+                    },
+                  ),
                 );
               }),
             ),
