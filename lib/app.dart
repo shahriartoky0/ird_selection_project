@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ird_selection_project/ui/screens/splash_screen.dart';
 import 'package:ird_selection_project/ui/style/colors.dart';
 
 import 'ui/screens/initial_page_screen.dart';
@@ -10,7 +11,8 @@ class HadisApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: InitialPageScreen(),
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
       theme: ThemeData(
           primaryColor: Colors.green,
           appBarTheme: AppBarTheme(
