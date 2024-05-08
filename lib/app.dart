@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ird_selection_project/controller/section_query_controller.dart';
+import 'package:ird_selection_project/ui/screens/initial_page_screen.dart';
 import 'package:ird_selection_project/ui/screens/splash_screen.dart';
 import 'package:ird_selection_project/ui/style/colors.dart';
 import 'controller/books_query_controller.dart';
@@ -18,7 +19,7 @@ class HadisApp extends StatelessWidget {
     return GetMaterialApp(
       navigatorKey: navigationKey,
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: const InitialPageScreen(),
       theme: ThemeData(
           primaryColor: Colors.green,
           appBarTheme: const AppBarTheme(
